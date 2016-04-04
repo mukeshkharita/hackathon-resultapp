@@ -1,0 +1,52 @@
+<?php
+$conn=mysqli_connect("loclhost","root","","prusty");
+
+if(!$conn){
+	die("no connection",mysqli_connect());
+	echo "no connection";
+}
+
+$branch = $_GET['branch'];
+$order = $_GET['order'];
+$year = $_GET['year'];
+
+if($year=='1'){
+	$year = '15';
+} else if($year == '2'){
+	$year='14';
+} else if($year=='3'){
+	$year='13';
+} else if($year == '4'){
+	$year='12';
+} else{
+	die("invalid year");
+}
+
+if($order=="rank"){
+	$query = "SELECT * FROM subjects WHERE branch='$branch' AND YEAR LIKE '$year'.'%' ORDER BY cgpi asc";
+} else if($oder == "roll"){
+	$query = "SELECT * FROM subjects WHERE branch='$branch' AND YEAR LIKE '$year'.'%' ORDER BY rollno asc";
+
+}
+$result = mysqli_connect($conn, $query);
+
+
+
+$result = mysqli_connect($conn, $query);
+
+if($result){
+	$res = array();
+	$i=1;
+	while($row = $result->fetch_assoc()){
+		$temp = array("rank"$i==>,"branch" => $$branch['branch'], "year"=>$year['year'];
+		$i++;
+		array_push($branch, $temp);
+	}
+	$f_res = array("result" => $branch);
+	echo json_encode($f_res);
+} else{
+	echo "error in fetching";
+}
+
+
+?>

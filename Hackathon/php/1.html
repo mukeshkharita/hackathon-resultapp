@@ -1,0 +1,29 @@
+<?php
+$conn=mysqli_connect("loclhost","root","","prusty");
+
+if(!$conn){
+	die("no connection",mysql_connect());
+	echo "no connection";
+}
+
+$roll = $_GET['roll'];
+$sem = $_GET['sem'];
+$query = "SELECT * FROM subjects WHERE rollno='$roll' AND semester='$sem' ";
+
+
+$result = mysqli_connect($conn, $query);
+
+if($result){
+	$res = array();
+	while($row = $result->fetch_assoc()){
+		$temp = array("subject" => $row['subject'], "ocr"=>$row['obcr'], "tcr"=>$row['tcr']);
+		array_push($row, $temp);
+	}
+	$f_res = array("result" => $row);
+	echo json_encode($f_res);
+} else{
+	echo "error in fetching";
+}
+
+
+?>
